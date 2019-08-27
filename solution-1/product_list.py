@@ -6,17 +6,17 @@ products = {0: {'name':'Product1', 'price':40, 'quantity':7}}
 def get_new_id():
     return max(products.keys()) + 1
 
-@app.route('/products/',methods = ['GET'])
+@app.route('/products',methods = ['GET'])
 def get_all_products():
     return jsonify(products)
     
-@app.route('/products/',methods = ['POST'])
+@app.route('/products',methods = ['POST'])
 def add_product():
     request.get_json(force=True)
     _id = get_new_id()
     p = {'name':request.json.get('name'), 'price':request.json.get('price'), 'quantity':request.json.get('quantity')}
     products[_id] = p
-    return jsonify(p)
+    return jsonify(p), 201
 
 @app.route('/products/<int:_id>',methods=['GET'])
 def get_product(_id):
